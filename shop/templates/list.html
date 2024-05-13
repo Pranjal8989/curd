@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block content %}
+  <!-- DATATABLES CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+
+  <!-- <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.css"> -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.min.css" />
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.css" />
+
+  <!-- DATATABLES JS -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#example').DataTable()
+    })
+  </script>
+  <div style=" display: flex; justify-content: center;">
+    <div class="card" style="width: 100%; margin: 10px 30px 10px 30px; ">
+      <div class="card-header">
+        <div class="d-flex justify-content-between">
+          Product List
+          <a class="btn btn-success" href="/add">Add Product</a>
+      </div>
+      </div>
+      <div class="card-body">
+        <table id="example" class="table table-striped" style="width:100%">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Size</th>
+              <th>Color</th>
+              <th>Material</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in products %}
+              <tr>
+                <td>
+                  <img src="{{ product.image.url }}" alt="image" class="img-thumbnail" style="height: 100px; width: 100px;" />
+                </td>
+                <td>{{ product.product_name }}</td>
+                {% for cat in Category %}
+                  {% if product.category == cat.id %}
+                    <td>{{ cat.name }}</td>
+                  {% endif %}
+                {% endfor %}
+                {% for size in sizes %}
+                  {% if product.size == size.id %}
+                    <td>{{ size.name }}</td>
+                  {% endif %}
+                {% endfor %}
+                {% for col in colors %}
+                  {% if product.color == col.id %}
+                    <td>{{ col.color_name }}</td>
+                  {% endif %}
+                {% endfor %}
+                <td>{{ product.material }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>
+                  <a href="edit/{{ product.id }}" class="btn btn-success">Edit</a>
+                  <a href="delete/{{ product.id }}" class="btn btn-danger">Delete</a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

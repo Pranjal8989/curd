@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div style=" display: flex; justify-content: center;">
+    <div class="card" style="width: 50rem; ">
+      <div class="card-header">Product</div>
+      <div class="card-body">
+        <form action="/insert" method="post" enctype="multipart/form-data"> {% csrf_token %}
+          <div class="mb-3">
+            <label  class="form-label">Product Name</label>
+            <input type="text" class="form-control" id="product" name="product_name" placeholder="Product Name" required />
+        </div>
+        <div class="row">
+        <div class="col mb-3">
+            <label  class="form-label">Category</label>
+            <select class="form-select" aria-label="Default select example" name="category" required>
+                <option >Select option</option>
+                {% for  cat in Category %}
+                      <option value="{{cat.id}}">{{cat.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col mb-3">
+            <label  class="form-label"> Size</label>
+            <select class="form-select" aria-label="Default select example" name="size" required>
+                <option >Select option</option>
+                {% for size in sizes %}
+                <option value="{{size.id}}">{{size.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mb-3">
+              <label  class="form-label">Color</label>
+            <select class="form-select" aria-label="Default select example" name="color" required> 
+                <option >Select option</option>
+                {% for Col in colors %}
+                <option value="{{Col.id}}">{{Col.color_name}}</option>
+                {% endfor %}
+              </select>
+          </div>
+          <div class=" col mb-3">
+            <label  class="form-label">Material</label>
+            <select class="form-select" aria-label="Default select example" name="material" required> 
+                <option >Select option</option>
+                <option value="wool">Wool</option>
+                <option value="cotton">Cotton</option>
+                <option value="polyester">Polyester</option>
+              </select>
+          </div>
+        </div>
+          <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="text" class="form-control" id="price" name="price" placeholder="Price" required/>
+          </div>
+          <div class="mb-3">
+            <label for="quantity" class="form-label">Quantity</label>
+            <input type="text" class="form-control" id="quantity" name="quantity" placeholder="Quantity" required/>
+          </div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="file" class="form-control" id="image" name="image" required />
+          </div>
+          
+          <div class="mb-3">
+            <label for="Description" class="form-label">Product Description</label>
+            <textarea class="form-control" id="Description" name="description" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <input type="submit" class="btn btn-success"  name="submit" value="submit" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
