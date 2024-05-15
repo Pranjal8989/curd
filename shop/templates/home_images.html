@@ -1,11 +1,85 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="row " style="display: flex; justify-content: center;">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 100px;
+    }
+    
+    .image-grid img {
+      width: 200px;
+      height: 200px;
+    }
+    
+    .container {
+      position: relative;
+      width: 100%;
+      max-width: 200px; /* Ensure it matches the img width */
+      margin: auto; /* Center align the images */
+    }
+    
+    .image {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    
+    .overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      transition: 0.5s ease;
+      background-color: rgba(0, 140, 186, 0.8); /* Semi-transparent overlay */
+      border-radius: 20px;
+    }
+    
+    .container:hover .overlay {
+      opacity: 1;
+    }
+    
+    .text {
+      color: white;
+      font-size: 15px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    
+    .img-thumbnail {
+      border: 0.5px solid black;
+      border-radius: 20px;
+      margin-top: 20px;
+    }
+  </style>
+
+  <div class="image-grid">
     {% for product in products %}
-      <div class="col-md-3">
-        <div class="thumbnail">
-          <img src="{{ product.image.url }}" alt="image" class="img-thumbnail" style="width:200px; height:200px; border: 0.5px solid black; border-radius: 20px; margin-top: 20px ;" />
+      <div class="container">
+        <img src="{{ product.image.url }}" alt="image" class="img-thumbnail" />
+        <div class="overlay">
+          <div class="text">
+            <span class="text-line">Name: {{ product.product_name }}</span>
+            <span class="text-line">Price: {{ product.price }}</span>
+            <span class="text-line">Quantity: {{ product.quantity }}</span>
+          </div>
         </div>
       </div>
     {% endfor %}

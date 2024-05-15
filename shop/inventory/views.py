@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .models import *
+import os
+from django.conf import settings
 from django.shortcuts import redirect
 # Create your views here.
 def index(request):
@@ -68,9 +70,9 @@ def edit(request, id):
         material = request.POST['material']
         price = request.POST['price']
         quantity = request.POST['quantity']
-        image_file = request.FILES['images']
         description = request.POST['description']
         
+        # Update product attributes
         product.product_name = product_name
         product.category = category_id
         product.size = size_id
@@ -78,8 +80,17 @@ def edit(request, id):
         product.material = material
         product.price = price
         product.quantity = quantity
-        product.image = image_file
         product.description = description
+        
+        if 'image' in request.FILES:
+            # Delete old image file
+            if product.image:
+                old_image_path = os.path.join(settings.MEDIA_ROOT, product.image.path)
+                if os.path.exists(old_image_path):
+                    os.remove(old_image_path)
+            # Save new image file
+            product.image = request.FILES['image']
+        
         product.save()
         
         return redirect("/list")
