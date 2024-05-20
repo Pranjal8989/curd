@@ -1,7 +1,7 @@
 from django.urls import path
 from inventory import views
 urlpatterns = [
-    path('',views.index,name='index'),
+    path('',views.inventory,name='inventory'),
     path('add',views.add,name='add'),
     path('insert',views.insert,name='insert'),
     path('list',views.list,name='list'),
