@@ -4,7 +4,7 @@ import os
 from django.conf import settings
 from django.shortcuts import redirect
 # Create your views here.
-def index(request):
+def inventory(request):
     products = Product.objects.all()
     context= {
         'products':products,
